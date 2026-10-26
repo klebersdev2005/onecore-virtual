@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --color-ink: #171717;
+  --color-muted: #737373;
+  --color-line: #EAEAEA;
+  --color-soft: #F7F8FA;
+  --color-brand: #FF6A00;
+  --color-brand-dark: #E85D04;
+  --color-brand-tint: #FFF3EA;
+  --color-success: #16803D;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  html { -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+  body { @apply bg-white text-ink font-sans; overflow-x: clip; }
+  ::selection { background: #FFE0CC; }
+  :focus-visible { outline: 2px solid var(--color-brand); outline-offset: 2px; border-radius: 4px; }
+}
+
+@layer components {
+  .container-x { @apply mx-auto w-full max-w-[1320px] px-4 sm:px-6 lg:px-10; }
+  .eyebrow { @apply text-[11px] font-bold uppercase tracking-[0.18em] text-brand; }
+  .h-display { @apply font-extrabold tracking-[-0.035em] leading-[0.98]; }
+  .prose-info h2 { @apply mt-9 mb-2 text-[19px] font-bold text-ink; }
+  .prose-info p { @apply mt-3; }
+  .prose-info a:not(.not-prose a) { @apply font-semibold text-ink underline underline-offset-4; }
+}
+
+/* Entrada da hero e revelação ao rolar */
+@keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+@keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes pop { 0% { transform: scale(1); } 40% { transform: scale(1.35); } 100% { transform: scale(1); } }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+@keyframes shimmer { to { background-position: -200% 0; } }
+
+.anim-rise { animation: rise .9s var(--ease-out-expo) both; }
+.anim-float { animation: float 6s ease-in-out infinite; }
+.anim-pop { animation: pop .45s var(--ease-out-expo); }
+.skeleton { background: linear-gradient(90deg,#F2F3F5 25%,#E9EAEE 50%,#F2F3F5 75%); background-size: 200% 100%; animation: shimmer 1.4s linear infinite; }
+
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s var(--ease-out-expo), transform .8s var(--ease-out-expo); }
+.reveal.is-visible { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+  .reveal { opacity: 1; transform: none; }
+}

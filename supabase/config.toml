@@ -1,0 +1,12 @@
+project_id = "onecore-virtual"
+
+[auth]
+site_url = "http://localhost:5190"
+additional_redirect_urls = ["http://localhost:5190/conta/nova-senha"]
+
+[functions.checkout]
+verify_jwt = true
+
+# O Mercado Pago não envia JWT do Supabase; a função valida a assinatura x-signature.
+[functions.mp-webhook]
+verify_jwt = false
